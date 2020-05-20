@@ -1,0 +1,57 @@
+{
+  "contactSection": {
+    "name": "placeHolder",
+    "jobTitle": "placeHolder",
+    "phone": "98765432",
+    "primaryEmail": "placeHolder"
+  },
+  "proposalSection": {
+    "title": "placeHolder",
+    "startDate": "placeHolder",
+    "endDate": "placeHolder",
+    "description": "placeHolder",
+    "activity": "FTA Consultancy",
+    "targetMarket": "Australia",
+    "remarks": "placeHolder"
+  },
+  "businessImpactSection": {
+    "endDate": "placeHolder",
+    "overseasSales": {
+      "currentYear": "20000",
+      "year1": "30000",
+      "year2": "40000",
+      "year3": "58000"
+    },
+    "overseasInvestments": {
+      "currentYear": "45000",
+      "year1": "20000",
+      "year2": "10000",
+      "year3": "8000"
+    },
+    "rationale": "placeHolder",
+    "benefits": "placeHolder"
+  },
+  "costSection": {
+    "remarks": "placeHolder",
+    "vendor": {
+      "name": "placeHolder",
+      "amount": "9000"
+    },
+    "rental": {
+      "description": "placeHolder",
+      "duration": "36",
+      "amount": "54000",
+      "remarks": "placeHolder"
+    },
+    "salary": {
+      "name": "placeHolder",
+      "designation": "placeHolder",
+      "identification": "G8765432",
+      "nationality": "Foreigner",
+      "role": "placeHolder",
+      "duration": "36",
+      "amount": "21000",
+      "remarks": "placeHolder"
+    }
+  }
+}
