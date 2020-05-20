@@ -1,0 +1,13 @@
+{
+  "envLogin": {
+    "baseUrl": "placeHolder",
+    "username": "placeHolder",
+    "password": "placeHolder"
+  },
+  "userLogin": {
+    "nric": "placeHolder",
+    "fullName": "placeHolder",
+    "uen": "placeHolder",
+    "role": "placeHolder"
+  }
+}
