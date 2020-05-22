@@ -19,6 +19,9 @@ import './commands';
 // For attaching screenshots to reports for failed tests
 import addContext from 'mochawesome/addContext';
 
+// Support for XPath
+require('cypress-xpath');
+
 Cypress.on('test:after:run', (test, runnable) => {
   if (test.state === 'failed') {
     let item = runnable;
