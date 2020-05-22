@@ -2,3 +2,5 @@ node_modules/
 
 cypress/results/
 cypress/screenshots/
+
+**/.DS_Store

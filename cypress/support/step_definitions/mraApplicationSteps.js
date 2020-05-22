@@ -1,77 +1,61 @@
 import { When, Then, And } from 'cypress-cucumber-preprocessor/steps';
-import { myGrantsPage, mraApplicationForm } from '../../integration/pageFactory';
-import * as dataSet from '../../integration/utils/dataUtils';
+import { myGrantsPage, mraApplicationForm, industrySection } from '../../integration/pageFactory';
+import { getProjectTitle } from '../../integration/utils/dataUtils';
 
 When('they start the application process', () => {
   cy.log('Starting the MRA application process...');
   myGrantsPage.applyForGrant();
 });
 
-And('they submit the MRA application with valid data across all sections', () => {
-  cy.log('Beginning to fill valid data across all sections of the MRA application form...');
-  
-  // Choose Industry Sector (ie. IT -> Bring business overseas -> Market Research Assistance)
-  mraApplicationForm.initiateApplication();
+And('they choose the Market Research Assistance grant', () => {
+  cy.log('Choosing the Market Research Assistance grant...');
+  industrySection.completeSection();
   mraApplicationForm.openApplication();
-  
-  // Fill Eligibility section
-  mraApplicationForm.fillEligibilitySection();
-  mraApplicationForm.proceedToNextSection();
+});
 
-  // Fill Contact section
-  mraApplicationForm.fillContactSection(dataSet.contactSectionData());
+And('proceed to the next section', () => {
   mraApplicationForm.proceedToNextSection();
+});
 
-  // Fill Proposal section
-  mraApplicationForm.fillProposalSection(dataSet.proposalSectionData(), dataSet.imageUploadData);
-  mraApplicationForm.proceedToNextSection();
+And('save the application', () => {
+  mraApplicationForm.saveApplication();
+});
 
-  // Fill Business Impact section
-  mraApplicationForm.fillBusinessImpactSection(dataSet.businessImpactSectionData());
-  mraApplicationForm.proceedToNextSection();
-
-  // Fill Cost section
-  mraApplicationForm.fillCostSection(dataSet.costSectionData(), dataSet.imageUploadData);
-  mraApplicationForm.proceedToNextSection();
-
-  // Complete Declaration section
-  mraApplicationForm.fillDeclarationSection();
+And('proceed to review the application', () => {
   mraApplicationForm.reviewApplication();
 });
 
-And('they goto their My Grants dashboard', () => {
+When('they goto their My Grants dashboard', () => {
   cy.log('Navigating to the My Grants dashboard...');
   myGrantsPage.openDashboard();
 });
 
-Then('they should be able to see the application in their My Grants dashbaord', () => {
-
+Then('they should be able to see the application under Processing tab', () => {
+  cy.log('Checking if the user sees the application in the My Grants dashboard under the Processing tab...');
+  myGrantsPage.openProcessingTab();
+  myGrantsPage.checkIfApplicationExists(getProjectTitle());
 });
 
-And('they enter valid details in the Eligibility section', () => {
-  cy.log('Filling valid details in the Eligibility section...');
-  mraApplicationForm.fillEligibilitySection();
+When('they navigate to the Contact section', () => {
+  mraApplicationForm.navigateToContactSection();
 });
 
-And('they save the application', () => {
-  cy.log('Saving the application as a draft...');
-  mraApplicationForm.saveApplication();
+When('they navigate to the Proposal section', () => {
+  mraApplicationForm.navigateToProposalSection();
 });
 
-Then('they should see the values they entered in the Eligibility section', () => {
-
+When('they navigate to the Business Impact section', () => {
+  mraApplicationForm.navigateToBusinessImpactSection();
 });
 
-And('they should be able to see the application under Drafts', () => {
-
+When('they navigate to the Cost section', () => {
+  mraApplicationForm.navigateToCostSection();
 });
 
-And('they enter invalid values in the Eligibility section', () => {
-  cy.log('Entering invalid values in the Eligibility section to trigger errors...');
-  mraApplicationForm.triggerWarningInEligibility();
+When('they navigate to the Declaration section', () => {
+  mraApplicationForm.navigateToDeclarationSection();
 });
 
-Then('they should see a warning message asking them to find out more about their eligibility', () => {
-  cy.log('Checking if the warning messages on Eligibility are displayed...');
-  mraApplicationForm.checkEligibilityWarning();
+Then('they should see an error count in the side bar', () => {
+  mraApplicationForm.shouldShowErrorCount();
 });

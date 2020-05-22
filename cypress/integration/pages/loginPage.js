@@ -1,22 +1,27 @@
-export default class LoginPage {
+import Page from './page';
+
+export default class LoginPage extends Page {
   constructor() {
+    super();
+
+    // Page objects
     this.btnLoginWithCorpPass = '.bgp-btn-loginCorpPass';
     this.tbNRIC = 'input[name="CPUID"]';
     this.tbFullName = 'input[name="CPUID_FullName"]';
     this.tbUEN = 'input[name="CPEntID"]';
-    this.lstRole = 'input[name="CPRole"]';
-    this.btnLogin = 'button[type="submit"]';
+    this.lstRole = 'select[name="CPRole"]';
+    this.btnLogin = 'select[name="CPRole"] + button';
   }
 
   login(data) {
-    cy.log('Starting the Login flow...');
-    cy.get(this.btnLoginWithCorpPass).click();
+    this.log('Starting the Login flow...');
+    this.click(this.btnLoginWithCorpPass);
 
-    cy.log('Logging into the portal with the CorpPass stub data...');
-    cy.get(this.tbNRIC).type(data.nric);
-    cy.get(this.tbFullName).type(data.fullName);
-    cy.get(this.tbUEN).type(data.uen);
-    cy.get(this.lstRole).select(data.role);
-    cy.get(this.btnLogin).click();
+    this.log('Logging into the portal with the CorpPass stub data...');
+    this.setValue(this.tbNRIC, data.nric);
+    this.setValue(this.tbFullName, data.fullName);
+    this.setValue(this.tbUEN, data.uen);
+    this.select(this.lstRole, data.role);
+    this.click(this.btnLogin);
   }
 }

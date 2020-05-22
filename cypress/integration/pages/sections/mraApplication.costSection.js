@@ -1,5 +1,11 @@
-export default class MraCostSection {
+import Page from '../page';
+import { formatCurrencyValue } from '../../utils/dataUtils';
+
+export default class CostSection extends Page {
   constructor() {
+    super();
+
+    // Page objects
     // Common
     this.tbCostRemarks = '#react-project_cost-remarks';
     
@@ -32,45 +38,98 @@ export default class MraCostSection {
     this.tbStaffSalaryAmount = '#react-project_cost-salaries-0-salary_in_billing_currency';
     this.fileStaffDoc = '#react-project_cost-salaries-0-attachments-input';
     this.tbStaffRemarks = '#react-project_cost-salaries-0-remarks';
+
+    // Read only check
+    this.txtVendorRegisteredLocation = '#react-project_cost-vendors-0-local_vendor';
+    this.txtStaffNationality = '#react-project_cost-salaries-0-nationality';
+    this.txtTotalCost = '#react-project_cost-total_cost';
+
+    this.txtError = '#react-project_cost-vendors-0-vendor_name-alert';
+
+    // Store the entered data
+    this.enteredData = undefined;
   }
 
-  completeSection(data, fileData) {
-    addNewVendorItem(data.vendor, fileData);
-    addNewRentalItem(data.rental, fileData);
-    addNewSalaryItem(data.salary, fileData);
-    cy.get(this.tbCostRemarks).type(data.remarks);
+  completeSection(data) {
+    this.log('Filling in values in the Cost section...');
+    this.addNewVendorItem(data.vendor);
+    this.addNewRentalItem(data.rental);
+    this.addNewSalaryItem(data.salary);
+    this.setValue(this.tbCostRemarks, data.remarks);
+    this.enteredData = data;
   }
 
-  addNewVendorItem(data, fileData) {
-    cy.get(this.cntVendors).click();
-    cy.get(this.btnAddVendor).click();
-    cy.get(this.radVendorRegisteredOverseas).click();
-    cy.get(this.tbVendorName).type(data.name);
-    cy.get(this.fileVendorDoc).trigger('drop', fileData);
-    cy.get(this.tbVendorBillAmount).type(data.amount);
+  addNewVendorItem(data) {
+    this.log('Adding a new vendor item...');
+    this.click(this.cntVendors);
+    this.click(this.btnAddVendor);
+    this.click(this.radVendorRegisteredOverseas);
+    this.setValue(this.tbVendorName, data.name);
+    this.uploadImage(this.fileVendorDoc);
+    this.setValue(this.tbVendorBillAmount, data.amount);
   }
 
-  addNewRentalItem(data, fileData) {
-    cy.get(this.cntRental).click();
-    cy.get(this.btnAddRental).click();
-    cy.get(this.tbRentalDescription).type(data.description);
-    cy.get(this.tbRentalDuration).type(data.duration);
-    cy.get(this.tbRentalBillAmount).type(data.amount);
-    cy.get(this.fileRentalDoc).trigger('drop', fileData);
-    cy.get(this.tbRentalRemarks).type(data.remarks);
+  addNewRentalItem(data) {
+    this.log('Adding a new rental item...');
+    this.click(this.cntRental);
+    this.click(this.btnAddRental);
+    this.setValue(this.tbRentalDescription, data.description);
+    this.setValue(this.tbRentalDuration, data.duration);
+    this.setValue(this.tbRentalBillAmount, data.amount);
+    this.uploadImage(this.fileRentalDoc);
+    this.setValue(this.tbRentalRemarks, data.remarks);
   }
 
-  addNewSalaryItem(data, fileData) {
-    cy.get(this.cntSalary).click();
-    cy.get(this.btnAddSalary).click();
-    cy.get(this.tbStaffName).type(data.name);
-    cy.get(this.tbStaffDesignation).type(data.designation);
-    cy.get(this.tbStaffIdentification).type(data.identification);
-    cy.get(this.lstStaffNationality).select(data.nationality);
-    cy.get(this.tbStaffRole).type(data.role);
-    cy.get(this.tbStaffDuration).type(data.duration);
-    cy.get(this.tbStaffSalaryAmount).type(data.amount);
-    cy.get(this.fileStaffDoc).trigger('drop', fileData);
-    cy.get(this.tbStaffRemarks).type(data.remarks);
+  addNewSalaryItem(data) {
+    this.log('Adding a new salary item...');
+    this.click(this.cntSalary);
+    this.click(this.btnAddSalary);
+    this.setValue(this.tbStaffName, data.name);
+    this.setValue(this.tbStaffDesignation, data.designation);
+    this.setValue(this.tbStaffIdentification, data.identification);
+    this.selectStaffNationality(data.nationality);
+    this.setValue(this.tbStaffRole, data.role);
+    this.setValue(this.tbStaffDuration, data.duration);
+    this.setValue(this.tbStaffSalaryAmount, data.amount);
+    this.uploadImage(this.fileStaffDoc);
+    this.setValue(this.tbStaffRemarks, data.remarks);
+  }
+
+  shouldHaveEnteredValues() {
+    this.log('Checking if the entered values are displayed in the Cost section...');
+    this.elementShouldHaveText(this.txtVendorRegisteredLocation, 'Overseas');
+    this.elementShouldHaveText(this.tbVendorName, this.enteredData.vendor.name);
+    this.elementShouldHaveText(this.tbVendorBillAmount, formatCurrencyValue(this.enteredData.vendor.amount, true));
+    
+    this.elementShouldHaveText(this.tbRentalDescription, this.enteredData.rental.description);
+    this.elementShouldHaveText(this.tbRentalDuration, `${this.enteredData.rental.duration} months`);
+    this.elementShouldHaveText(this.tbRentalBillAmount, formatCurrencyValue(this.enteredData.rental.amount, true));
+    this.elementShouldHaveText(this.tbRentalRemarks, this.enteredData.rental.remarks);
+
+    this.elementShouldHaveText(this.tbStaffName, this.enteredData.salary.name);
+    this.elementShouldHaveText(this.tbStaffDesignation, this.enteredData.salary.designation);
+    this.elementShouldHaveText(this.txtStaffNationality, this.enteredData.salary.nationality);
+    this.elementShouldHaveText(this.tbStaffRole, this.enteredData.salary.role);
+    this.elementShouldHaveText(this.tbStaffDuration, `${this.enteredData.salary.duration} months`);
+    this.elementShouldHaveText(this.tbStaffSalaryAmount, formatCurrencyValue(this.enteredData.salary.amount, true));
+    this.elementShouldHaveText(this.tbStaffRemarks, this.enteredData.salary.remarks);
+  }
+
+  shouldShowErrors() {
+    this.log('Checking if specific errors are displayed...');
+    this.elementShouldBeVisible(this.txtError);
+    this.elementShouldHaveText(this.txtError, 'We need a response for this field');
+  }
+
+  selectStaffNationality(nationality) {
+    this.click('#react-select-project_cost-salaries-0-nationality--value + span.Select-arrow-zone');
+    this.setValueAndEnter('#react-select-project_cost-salaries-0-nationality--value input', nationality);
+  }
+
+  enterInvalidVendorName() {
+    this.click(this.cntVendors);
+    this.click(this.btnAddVendor);
+    this.setValue(this.tbVendorName, ' ');
+    this.click(this.tbVendorBillAmount);
   }
 }

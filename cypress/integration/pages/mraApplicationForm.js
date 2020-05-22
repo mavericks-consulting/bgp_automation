@@ -1,91 +1,78 @@
-import MraIndustrySection from './sections/mraApplication.industrySection';
-import MraEligibilitySection from './sections/mraApplication.eligibilitySection';
-import MraContactSection from './sections/mraApplication.contactSection';
-import MraProposalSection from './sections/mraApplication.proposalSection';
-import MraBusinessImpactSection from './sections/mraApplication.businessImpactSection';
-import MraCostSection from './sections/mraApplication.costSection';
-import MraDeclarationSection from './sections/mraApplication.declarationSection';
+import Page from './page';
 
-export default class MraApplicationForm {
+export default class MraApplicationForm extends Page {
   constructor() {
-    // Common across sections
+    super();
+
+    // Page objects
     this.btnSaveApplication = '#save-btn';
     this.btnNextSection = '#next-btn';
     this.btnReviewApplication = '#review-btn'
     this.btnProceedWithApplication = '#keyPage-form-button';
 
-    // Sections
-    this.industrySection = new MraIndustrySection();
-    this.eligibilitySection = new MraEligibilitySection();
-    this.contactSection = new MraContactSection();
-    this.proposalSection = new MraProposalSection();
-    this.businessImpactSection = new MraBusinessImpactSection();
-    this.costSection = new MraCostSection();
-    this.declarationSection = new MraDeclarationSection();
+    // Side bar
+    this.lnkEligibilitySection = 'span.menu-text:contains("Eligibility")'
+    this.lnkContactSection = 'span.menu-text:contains("Contact Details")'
+    this.lnkProposalSection = 'span.menu-text:contains("Proposal")'
+    this.lnkBusinessImpactSection = 'span.menu-text:contains("Business Impact")'
+    this.lnkCostSection = 'span.menu-text:contains("Cost")'
+    this.lnkDeclarationSection = 'span.menu-text:contains("Declare & Review")'
+
+    this.txtSideBarError = 'ul.nav-sidebar li.active .label-error';
   }
 
   openApplication() {
-    cy.log('Opening the application...');
-    cy.get(this.btnProceedWithApplication).click();
+    this.log('Opening the application...');
+    this.click(this.btnProceedWithApplication);
   }
 
   saveApplication() {
-    cy.log('Saving the application draft...');
-    cy.get(this.btnSaveApplication).click();
+    this.log('Saving the application draft...');
+    this.click(this.btnSaveApplication);
   }
 
   proceedToNextSection() {
-    cy.log('Proceeding to the next section...');
-    cy.get(this.btnNextSection).click();
+    this.log('Proceeding to the next section...');
+    this.click(this.btnNextSection);
   }
 
   reviewApplication() {
-    cy.log('Reviewing the application before submission...');
-    cy.get(this.btnReviewApplication).click();
+    this.log('Reviewing the application before submission...');
+    this.click(this.btnReviewApplication);
   }
 
-  initiateApplication() {
-    cy.log('Creating the Grants application by choosing the MRA workflow...');
-    this.industrySection.completeSection();
+  navigateToEligibilitySection() {
+    this.log('Directly accessing the Eligibility section using the side bar...');
+    this.click(this.lnkEligibilitySection);
   }
 
-  fillEligibilitySection() {
-    cy.log('Filling the Eligibility section...');
-    this.eligibilitySection.completeSection();
+  navigateToContactSection() {
+    this.log('Directly accessing the Contact section using the side bar...');
+    this.click(this.lnkContactSection);
   }
 
-  triggerWarningInEligibility() {
-    cy.log('Triggering a warning condition in the Eligibility section...');
-    this.eligibilitySection.triggerWarning();  
+  navigateToProposalSection() {
+    this.log('Directly accessing the Proposal section using the side bar...');
+    this.click(this.lnkProposalSection);
   }
 
-  fillContactSection(data) {
-    cy.log('Filling the Contact section...');
-    this.contactSection.completeSection(data);
+  navigateToBusinessImpactSection() {
+    this.log('Directly accessing the Business Impact section using the side bar...');
+    this.click(this.lnkBusinessImpactSection);
   }
 
-  fillProposalSection(data, fileData) {
-    cy.log('Filling the Proposal section...');
-    this.proposalSection.completeSection(data, fileData);
+  navigateToCostSection() {
+    this.log('Directly accessing the Cost section using the side bar...');
+    this.click(this.lnkCostSection);
   }
 
-  fillBusinessImpactSection(data) {
-    cy.log('Filling the Business Impact section...');
-    this.businessImpactSection.completeSection(data);
+  navigateToDeclarationSection() {
+    this.log('Directly accessing the Declaration section using the side bar...');
+    this.click(this.lnkDeclarationSection);
   }
 
-  fillCostSection(data, fileData) {
-    cy.log('Filling the Cost section...');
-    this.costSection.completeSection(data, fileData);
-  }
-
-  fillDeclarationSection() {
-    cy.log('Filling the Declaration section...');
-    this.declarationSection.completeSection();
-  }
-
-  checkEligibilityWarning() {
-    cy.log('Checking if the Eligibility warning has been triggered...');
-    this.eligibilitySection.shouldHaveWarning();
+  shouldShowErrorCount() {
+    this.log('Checking if the sidebar shows an error count for the specific section...');
+    this.elementShouldBeVisible(this.txtSideBarError);
   }
 }

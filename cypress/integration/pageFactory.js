@@ -1,7 +1,23 @@
 import LoginPage from './pages/loginPage';
 import MyGrantsPage from './pages/myGrantsPage';
 import MraApplicationForm from './pages/mraApplicationForm';
+import IndustrySection from './pages/sections/mraApplication.industrySection';
+import EligibilitySection from './pages/sections/mraApplication.eligibilitySection';
+import ContactSection from './pages/sections/mraApplication.contactSection';
+import ProposalSection from './pages/sections/mraApplication.proposalSection';
+import BusinessImpactSection from './pages/sections/mraApplication.businessImpactSection';
+import CostSection from './pages/sections/mraApplication.costSection';
+import DeclarationSection from './pages/sections/mraApplication.declarationSection';
+import ReviewSection from './pages/sections/mraApplication.reviewSection';
 
 export const loginPage = new LoginPage();
 export const myGrantsPage = new MyGrantsPage();
 export const mraApplicationForm = new MraApplicationForm();
+export const industrySection = new IndustrySection();
+export const eligibilitySection = new EligibilitySection();
+export const contactSection = new ContactSection();
+export const proposalSection = new ProposalSection();
+export const businessImpactSection = new BusinessImpactSection();
+export const costSection = new CostSection();
+export const declarationSection = new DeclarationSection();
+export const reviewSection = new ReviewSection();

@@ -3,15 +3,42 @@
     "name": "placeHolder",
     "jobTitle": "placeHolder",
     "phone": "98765432",
-    "primaryEmail": "placeHolder"
+    "primaryEmail": "placeHolder",
+    "secondaryEmail": "placeHolder",
+    "originalAddress": {
+      "houseNo": "45",
+      "area": "CHOA CHU KANG CENTRAL",
+      "unit": "19",
+      "level": "03",
+      "postalCode": "453123"
+    },
+    "customAddress": {
+      "houseNo": "10",
+      "area": "ADIS ROAD",
+      "unit": "11",
+      "level": "03",
+      "postalCode": "229979"
+    },
+    "sameAddress": "true",
+    "originalOfferee": {
+      "name": "placeHolder",
+      "jobTitle": "placeHolder",
+      "email": "placeHolder"
+    },
+    "customOfferee": {
+      "name": "placeHolder",
+      "jobTitle": "placeHolder",
+      "email": "placeHolder"
+    },
+    "sameOfferee": "true"
   },
   "proposalSection": {
-    "title": "placeHolder",
+    "title": "Test Market Research",
     "startDate": "placeHolder",
     "endDate": "placeHolder",
     "description": "placeHolder",
     "activity": "FTA Consultancy",
-    "targetMarket": "Australia",
+    "market": "Australia",
     "remarks": "placeHolder"
   },
   "businessImpactSection": {
@@ -39,7 +66,7 @@
     },
     "rental": {
       "description": "placeHolder",
-      "duration": "36",
+      "duration": "10",
       "amount": "54000",
       "remarks": "placeHolder"
     },
@@ -49,7 +76,7 @@
       "identification": "G8765432",
       "nationality": "Foreigner",
       "role": "placeHolder",
-      "duration": "36",
+      "duration": "10",
       "amount": "21000",
       "remarks": "placeHolder"
     }

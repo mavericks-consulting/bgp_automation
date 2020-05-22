@@ -1,5 +1,10 @@
-export default class MraIndustrySection {
+import Page from '../page';
+
+export default class IndustrySection extends Page {
   constructor() {
+    super();
+
+    // Page objects
     this.lnkIT = '#IT';
     this.lnkBusinessExpansion = 'input[id="International Expansion"]';
     this.lnkMarketReadinessAssistance = 'input[id="Market Readiness Assistance 2"]';
@@ -7,9 +12,10 @@ export default class MraIndustrySection {
   }
 
   completeSection() {
-    cy.get(this.lnkIT).click();
-    cy.get(this.lnkBusinessExpansion).click();
-    cy.get(this.lnkMarketReadinessAssistance).click();
-    cy.get(this.btnInitiateApplication).click();
+    this.log('Choosing the Market Research Assistance workflow...');
+    this.click(this.lnkIT);
+    this.click(this.lnkBusinessExpansion);
+    this.click(this.lnkMarketReadinessAssistance);
+    this.click(this.btnInitiateApplication);
   }
 }

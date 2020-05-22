@@ -13,7 +13,7 @@ Given('user has logged in to the BGP portal with CorpPass', () => {
   loginPage.login(userLoginData);
 });
 
-And('they refresh the page', () => {
+And('refresh the page', () => {
   cy.log('Refreshing the page...');
   cy.reload();
 });
